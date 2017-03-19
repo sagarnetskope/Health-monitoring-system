@@ -1,1 +1,9 @@
-<h1>in user_info page</h1>
+{% extends "bootstrap/base.html" %}
+{% block title %}Health Monitoring System{% endblock %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
+{% block content %}
+<h1>user info page</h1>
+{% endblock %}
+{% endblock %}

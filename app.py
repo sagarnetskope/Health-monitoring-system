@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired,Email,Length
 from wtforms import StringField,PasswordField
-from flask_login import UserMixin,LoginManager
+from flask_login import UserMixin,LoginManager,login_required,login_user,logout_user
 from werkzeug.security import check_password_hash,generate_password_hash
 import os
 
@@ -17,10 +17,33 @@ db=SQLAlchemy(app)
 
 
 class User(db.Model,UserMixin):
+    __tablename__="user"
     user_id=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String(20),unique=True)
     password=db.Column(db.String(80))
     #add more things here
+
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        #self.email = email
+        #self.registered_on = datetime.utcnow()
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.user_id)
+
+    def __repr__(self):
+        return '<User %r>' % (self.username)
 
 
 
@@ -31,10 +54,12 @@ class SignupForm(FlaskForm):
 
 login_manager=LoginManager()
 login_manager.init_app(app)
+login_manager.login_view='login'
 
-#@login_manager.user_loader()
-#def Load_user(user_id):
-  #  return User.query.get('user_id')
+@login_manager.user_loader
+def load_user(user_id):
+    #print '\n\n\n In user_loader function \n\n and returned value is'+str(User.get(unicode(user_id)))+'\n\n\n'
+    return User.query.get(int(user_id))
 
 
 
@@ -47,7 +72,7 @@ def signup():
     form=SignupForm()
     if form.validate_on_submit():
         #return 'form submitted and validated'
-        hashed_password=generate_password_hash(form.password.data,method='sha256')
+        hashed_password=generate_password_hash(form.password.data)
         #add error message for unique username
         new_user=User(username=form.username.data,password=hashed_password)#creating an object for sqlalchemy
         db.session.add(new_user)#add new user to database
@@ -58,16 +83,25 @@ def signup():
 
 @app.route('/login',methods=['POST'])
 def login():
+    #print '\n\n\ninside login route and authetication will be done after this\n\n\n'
     user=User.query.filter_by(username=request.form['username']).first()
+    #print "\n\nusername from form  is "+request.form['username']
+    #print "username from database is \n\n"+user.username
     if user:
             if check_password_hash(user.password,request.form['password']):
+                #print '\n\n\nuser is\n\n'+str(user)+'\n\n\n'
+                #print "\n\n user.user_id"+str(user.user_id)+'\n\n\n'
+                login_user(user)
                 return redirect(url_for('user_info'))
             else:
-                return "login not successfull"
+                return "login not successfull Password is incorrect"
+    else:
+        "Login not successful ie username is incorrect"
 
 
 
 @app.route('/user_info',methods=['GET','POST'])
+@login_required
 def user_info():
   if request.method=='GET':
         return render_template('user_info.html')

@@ -6,11 +6,22 @@ from wtforms.validators import InputRequired,Email,Length
 from wtforms import StringField,PasswordField
 from flask_login import UserMixin,LoginManager,login_required,login_user,logout_user
 from werkzeug.security import check_password_hash,generate_password_hash
+from flask_mail import Mail,Message
+#from flask import flash
 import os
 
 app=Flask(__name__)
 app.secret_key=os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:////home/nsadmin/contacts.db'
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'health.monitoring2017@gmail.com'
+app.config['MAIL_PASSWORD'] = 'sagar123'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail=Mail(app)
 
 Bootstrap(app)
 db=SQLAlchemy(app)
@@ -77,6 +88,9 @@ def signup():
         new_user=User(username=form.username.data,password=hashed_password)#creating an object for sqlalchemy
         db.session.add(new_user)#add new user to database
         db.session.commit()
+        msg=Message('You have successfully signed up to HMS',sender='health.monitoring2017@gmail.com',recipients=['tanay@netskope.com','sags.sharma@gmail.com','saikiran@netskope.com'])
+        mail.send(msg)
+       # flash("Successfully signed in",'success')
         return redirect(url_for('index'))#redirect to index.html
     return render_template('signup.html',form=form)
 
@@ -103,7 +117,8 @@ def login():
 @app.route('/user_info',methods=['GET','POST'])
 @login_required
 def user_info():
-  if request.method=='GET':
+    #flash('logging IN')
+    if request.method=='GET':
         return render_template('user_info.html')
  #   else if request.method=='POST':
         #get user information and push it to database
@@ -114,7 +129,13 @@ def about():
 
 @app.route('/contact')
 def contact():
-    return "contact page"
+    return render_template('contacts.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index.html'))
 
 
 

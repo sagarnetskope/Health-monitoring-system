@@ -7,7 +7,12 @@ from wtforms import StringField,PasswordField
 from flask_login import UserMixin,LoginManager,login_required,login_user,logout_user
 from werkzeug.security import check_password_hash,generate_password_hash
 from flask_mail import Mail,Message
+import time
 #from flask import flash
+
+from datadog import  api,statsd,initialize
+
+
 import os
 
 app=Flask(__name__)
@@ -76,11 +81,13 @@ def load_user(user_id):
 
 @app.route('/home',methods=['GET','POST'])
 def index():
+    statsd.increment('indexPage')
     return render_template('index.html')
 
 @app.route('/signup',methods=['GET','POST'])
 def signup():
     form=SignupForm()
+    statsd.increment('SignupForm')
     if form.validate_on_submit():
         #return 'form submitted and validated'
         hashed_password=generate_password_hash(form.password.data)
@@ -88,7 +95,7 @@ def signup():
         new_user=User(username=form.username.data,password=hashed_password)#creating an object for sqlalchemy
         db.session.add(new_user)#add new user to database
         db.session.commit()
-        msg=Message('You have successfully signed up to HMS',sender='health.monitoring2017@gmail.com',recipients=['tanay@netskope.com','sags.sharma@gmail.com','saikiran@netskope.com'])
+        msg=Message(subject='You have successfully signed up to HMS',body='Complete your registartion by going to This url\nhttp://localhost:9000/home',sender='health.monitoring2017@gmail.com',recipients=[form.username.data])
         mail.send(msg)
        # flash("Successfully signed in",'success')
         return redirect(url_for('index'))#redirect to index.html
@@ -97,6 +104,8 @@ def signup():
 
 @app.route('/login',methods=['POST'])
 def login():
+    start_time=time.time()
+
     #print '\n\n\ninside login route and authetication will be done after this\n\n\n'
     user=User.query.filter_by(username=request.form['username']).first()
     #print "\n\nusername from form  is "+request.form['username']
@@ -106,6 +115,7 @@ def login():
                 #print '\n\n\nuser is\n\n'+str(user)+'\n\n\n'
                 #print "\n\n user.user_id"+str(user.user_id)+'\n\n\n'
                 login_user(user)
+                statsd.histogram("logintime",(time.time()-start_time))
                 return redirect(url_for('user_info'))
             else:
                 return "login not successfull Password is incorrect"

@@ -4,13 +4,48 @@
 {% block head %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='signup_form.css')}}"
 {% endblock %}
 {% block content %}
+
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <!--<div class="container">-->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/home">Home</a>
+             <a class="navbar-brand" href="/about">About us</a>
+             <a class="navbar-brand" href="/contacts">Contact</a>
+
+        </div>
+
+
+          <form class="navbar-form navbar-right" action="/login" method="post">
+            <div class="form-group">
+              <input name='username' type="email" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input name="password" type="password" placeholder="Password" class="form-control" minlength="8" maxlength="80">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+
+    </nav>
+
+<div class="container">
+    <h1>Signup Form</h1>
 <form method="post" action="/signup">
   <div class="form-group">
       {{form.hidden_tag()}}
+      {{wtf.form_field(form.name)}}
       {{wtf.form_field(form.username)}}
       {{wtf.form_field(form.password)}}
+      {{wtf.form_field(form.confirmPassword)}}
     <!--<label for="exampleInputEmail1">Email address</label>
     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
   </div>
@@ -22,5 +57,5 @@
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
-
+</div>
 {% endblock %}

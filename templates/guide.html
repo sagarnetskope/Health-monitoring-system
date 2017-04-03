@@ -3,7 +3,6 @@
 {% block styles %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='con_file.css')}}">
 {% endblock %}
 {% block head %}
 {{super()}}
@@ -21,15 +20,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/contacts">Home</a>
-             <a class="navbar-brand" href="/about">About us</a>
-          <a class="navbar-brand" href="/logout">Logout</a>
+          <a class="navbar-brand" href="/home">Home</a>
+            <a class="navbar-brand" href="/signup">Signup</a>
+             <a class="navbar-brand" href="/contacts">Contact</a>
 
         </div>
+
+
+          <form class="navbar-form navbar-right" action="/login" method="post">
+            <div class="form-group">
+              <input name='username' type="email" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input name="password" type="password" placeholder="Password" class="form-control" minlength="8" maxlength="80">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-<br><br><br>
-<h1>Welcome      {{myvar}}</h1>
-<h1>userinfo page</h1>
+
 {% endblock %}

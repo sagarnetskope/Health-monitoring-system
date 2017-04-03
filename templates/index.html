@@ -2,6 +2,7 @@
 {% block head %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='healthify.css')}}"
 {% block title %}Health Monitoring System{% endblock %}
 {% endblock %}
 {% block body %}
@@ -17,10 +18,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/home">Home</a>
              <a class="navbar-brand" href="/about">About us</a>
              <a class="navbar-brand" href="/signup">Signup</a>
-             <a class="navbar-brand" href="/contact">Contact</a>
+             <a class="navbar-brand" href="/contacts">Contact</a>
 
         </div>
 
@@ -42,8 +42,8 @@
     <div class="jumbotron">
       <div class="container">
         <h1>Welcome to Health Monitoring System</h1>
-        <p>This is your first step  template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <p>This is your health monitoring system</p>
+        <p><a class="btn btn-primary btn-lg" href="/guide" role="button">Guide &raquo;</a></p>
       </div>
     </div>
 

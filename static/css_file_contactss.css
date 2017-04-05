@@ -2,9 +2,9 @@
 {
 margin:200px;
 }
-body{
-background-image:url('/static/images/healthcare.jpg')
-}
+/*body{
+background-image:url('/static/images/health.jpg')
+}*/
 * {
     box-sizing: border-box;
 }
@@ -40,7 +40,7 @@ input {
 
 /* LABEL ======================================= */
 label {
-    color: #fff;
+    /*color: #fff;*/
     font-size: 18px;
     font-weight: normal;
     position: absolute;
@@ -56,7 +56,8 @@ label {
 input:focus ~ label, input:valid ~ label {
     top: -20px;
     font-size: 14px;
-    color: #fff;
+    /*color: #fff;*/
+    color:black;
 }
 
 /* BOTTOM BARS ================================= */
@@ -64,6 +65,7 @@ input:focus ~ label, input:valid ~ label {
     position: relative;
     display: block;
     width: 100%;
+    color:black;
 }
 
     .bar:before, .bar:after {

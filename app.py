@@ -2,12 +2,11 @@ from flask import Flask,render_template,redirect,url_for,request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms.validators import InputRequired,Email,Length,EqualTo
-from wtforms import StringField,PasswordField,IntegerField
+from wtforms.validators import InputRequired,Email,Length,EqualTo,NumberRange
+from wtforms import StringField,PasswordField,IntegerField,FloatField
 from flask_login import UserMixin,LoginManager,login_required,login_user,logout_user
 from werkzeug.security import check_password_hash,generate_password_hash
 from flask_mail import Mail,Message
-import time
 
 
 import os
@@ -60,15 +59,80 @@ class User(db.Model,UserMixin):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
+class Contact(db.Model, UserMixin):
+        __tablename__ = "contact"
+        c_id=db.Column(db.Integer,primary_key=True)
+        c_name = db.Column(db.String(20))
+        c_email= db.Column(db.String(20), unique=True)
+        c_mobile = db.Column(db.String(20))
+        c_message= db.Column(db.String(80))
+
+        # add more things here
+
+
+        def __init__(self, name,email, message,mobile):
+            self.c_name = name
+            self.c_email = email
+            self.c_message = message
+            self.c_mobile = mobile
+            # self.registered_on = datetime.utcnow()
+
+        def is_authenticated(self):
+            return True
+
+        def is_active(self):
+            return True
+
+        def is_anonymous(self):
+            return False
+
+        def get_id(self):
+            return unicode(self.user_id)
+
+        def __repr__(self):
+            return '<User %r>' % (self.c_name)
+
+
+class User_info(db.Model, UserMixin):
+    __tablename__ = "user_info"
+    u_name = db.Column(db.String, primary_key=True)
+    u_age = db.Column(db.String(20))
+    u_height = db.Column(db.String(20))
+    u_weight = db.Column(db.String(20))
+    u_bmi = db.Column(db.String(20))
+
+    # add more things here
+
+
+    def __init__(self, name, age, height,weight,bmi):
+        self.u_name = name
+        self.u_age = age
+        self.u_height= height
+        self.u_weight = weight
+        self.u_bmi=bmi
+        # self.registered_on = datetime.utcnow()
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+
+    def __repr__(self):
+        return '<User %r>' % (self.u_name)
 
 
 class SignupForm(FlaskForm):
-    #add other fields
     name = StringField('Name')
     username=StringField('username',validators=[Email(message='Please enter valid email')])
 
     password=PasswordField('password',validators=[InputRequired(message='Enter a password'),Length(min=8,max=80,message='Length of password must be between 8 to 80 letters'),EqualTo('confirmPassword',message='Passwords must match')])
     confirmPassword=PasswordField('confirm Password', validators=[Length(min=8, max=80, message='Length of password must be between 8 to 80 letters')])
+
 
 
 login_manager=LoginManager()
@@ -84,7 +148,20 @@ def load_user(user_id):
 
 @app.route('/home',methods=['GET','POST'])
 def index():
-    return render_template('index.html')
+    if request.method=='GET':
+        return render_template('index.html')
+    if request.method=='POST':
+        new_contact= Contact(name=request.form['name'], email=request.form['email'],message=request.form['message'],mobile=str(request.form['mobile']))  # creating an object for sqlalchemy#add more things
+        db.session.add(new_contact)  # add new contact to database
+        db.session.commit()
+        name=request.form['name']
+        email=request.form['email']
+        mobile=request.form['mobile']
+        message=request.form['message']
+        bdy='\n\n customer name :'+name+'\n\ncontact no : '+str(mobile)+'\n\n message : '+message
+        msg = Message(subject='Your customer  wants to contact with you',body=bdy,sender='health.monitoring2017@gmail.com', recipients=['sags.sharma@gmail.com','sagar@netskope.com'])
+        mail.send(msg)
+        return render_template('index.html')
 
 @app.route('/signup',methods=['GET','POST'])
 def signup():
@@ -96,7 +173,7 @@ def signup():
         new_user=User(name=form.name.data,username=form.username.data,password=hashed_password)#creating an object for sqlalchemy#add more things
         db.session.add(new_user)#add new user to database
         db.session.commit()
-        msg=Message(subject='You have successfully signed up to HMS',body='Complete your registartion by going to This url\nhttp://localhost:9000/home',sender='health.monitoring2017@gmail.com',recipients=[form.username.data])
+        msg=Message(subject='You have successfully signed up to Health Monitoring System',body='Complete your registartion by going to This url\nhttp://localhost:9000/home',sender='health.monitoring2017@gmail.com',recipients=[form.username.data])
         mail.send(msg)
        # flash("Successfully signed in",'success')
         return redirect(url_for('index'))#redirect to index.html
@@ -122,16 +199,27 @@ def login():
         "Login not successful ie username is incorrect"
 
 
-
+name=''
 @app.route('/user_info',methods=['GET','POST'])
 @login_required
 def user_info():
-    name= request.args.get('user')
-    #flash('logging IN')
     if request.method=='GET':
-        return render_template('user_info.html',myvar=name)
- #   else if request.method=='POST':
-        #get user information and push it to database
+        global name
+        name= request.args.get('user')
+        return render_template('user_info.html',myvar=name,func=Bmi_calculator)
+    if request.method=='POST':
+        height=request.form['height']
+        weight=request.form['weight']
+        bmi=Bmi_calculator(weight,height)
+        global name
+        x=name
+        new_user_info = User_info(name=x, age=str(request.form['age']), height=str(height),weight=str(weight),bmi=str(bmi))  # creating an object for sqlalchemy#add more things
+        db.session.add(new_user_info)  # add new contact to database
+        db.session.commit()
+        return render_template('bmi.html',myvar=bmi)
+        #return "<h1>validated</h1>"
+
+
 
 @app.route('/about')
 def about():
@@ -152,6 +240,13 @@ def Guide():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+def Bmi_calculator(weight,height):
+    height=float(height)
+    weight=float(weight)
+    x=float(height**2)
+    bmi=(weight/x)*703
+    return bmi
 
 
 

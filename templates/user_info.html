@@ -1,15 +1,11 @@
 {% extends "bootstrap/base.html" %}
 {% block title %}Health Monitoring System{% endblock %}
-{% block styles %}
-{{super()}}
-<link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='con_file.css')}}">
-{% endblock %}
 {% block head %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css_file_userinfo.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Spirax" rel="stylesheet">
 {% endblock %}
-
 {% block content %}
 
  <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -21,7 +17,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/contacts">Home</a>
+          <a class="navbar-brand" href="/contacts">Contact Us</a>
              <a class="navbar-brand" href="/about">About us</a>
           <a class="navbar-brand" href="/logout">Logout</a>
 
@@ -30,6 +26,35 @@
       </div>
     </nav>
 <br><br><br>
-<h1>Welcome      {{myvar}}</h1>
-<h1>userinfo page</h1>
+
+<h1 style="text-align:center">Welcome {{myvar}}</h1>
+<h2>{{myvar}} You are step closer to complete your health analysis</h2>
+`<body>
+<div class="container">
+    <h1>Enter your information</h1>
+<form  method="post" action="/user_info">
+  <div class="form-group">
+      <label for="age"><b>Age:</b></label>
+      <br><br><input type="number" min="0" max="150" name="age" id="age" placeholder="Enter valid age in years" required><br><br>
+      <label for="gender"><b>Gender:</b></label>
+      <br><br><b>Male:</b><input type="radio" id="gender" value="male" name="gender"> <b>Female:</b> <input type="radio" id="gender" value="female" name="gender"><br><br>
+      <label for="height"><b>Height:</b></label>
+      <br><br><input type="number" min="0" max="300" name="height" id="height" placeholder="Enter valid height in inches" required><br><br>
+      <label for="weight"><b>Weight:</b></label>
+      <br><br><input type="number" min="0" max="900" name="weight" id="weight" placeholder="Enter valid weight in pounds" required><br><br>
+
+    <!--<label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>!-->
+
+  </div>
+  <button type="submit" class="btn btn-default">Calculate BMI</button>
+</form>
+</div>
+
+</body>
 {% endblock %}

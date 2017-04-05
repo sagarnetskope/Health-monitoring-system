@@ -1,0 +1,48 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Health Monitoring System{% endblock %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css_bmi_file.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet">
+{% endblock %}
+{% block content %}
+
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/contacts">Contact Us</a>
+             <a class="navbar-brand" href="/about">About us</a>
+          <a class="navbar-brand" href="/logout">Logout</a>
+
+        </div>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+<br><br><br>
+<p >Your BMI is {{myvar}}</p>
+{% if (myvar<=18.5): %}
+<p>You are UnderWeight</p>
+{% endif %}
+{% if (18.5<myvar<=24.9): %}
+<p>You are Normal</p>
+{% endif %}
+{% if (24.9<myvar<=29.9): %}
+<p>You are Overweight</p>
+{% endif %}
+{% if (29.9<myvar): %}
+<p>You are Obese</p>
+{% endif %}
+<table align="center"><th>BMI Categories:</th>
+    <tr><td>Underweight = <18.5</td></tr>
+    <tr><td>Normal weight = 18.5–24.9</td></tr>
+    <tr><td>Overweight = 25–29.9</td></tr>
+    <tr><td>Obesity = BMI of 30 or greater</td></tr>
+</table>
+{% endblock %}

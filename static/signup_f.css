@@ -1,12 +1,10 @@
-body{
-background-image:url('/static/images/healthcare.jpg')
-}
 .container{
     width: 700px;
     padding: 10px;
     border: 5px solid black;
     margin: 100px;
-    margin-left:350px;
+    margin-left:30%;
+    align:center;
     }
   h1{
   text-align:center;

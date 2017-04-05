@@ -3,7 +3,7 @@
 {% block styles %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='con_file.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css_file_contactss.css')}}">
 {% endblock %}
 {% block head %}
 {{super()}}
@@ -30,10 +30,10 @@
 
           <form class="navbar-form navbar-right" action="/login" method="post">
             <div class="form-group">
-              <input name='username' type="email" placeholder="Email" class="form-control">
+              <input name='username' type="email" placeholder="Email" class="form-control" required>
             </div>
             <div class="form-group">
-              <input name="password" type="password" placeholder="Password" class="form-control" minlength="8" maxlength="80">
+              <input name="password" type="password" placeholder="Password" class="form-control" minlength="8" maxlength="80" required>
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </form>
@@ -47,34 +47,34 @@
         <form method="post" action="/home">
 
             <div class="group">
-                <input type="text" required>
+                <input type="text" name="name" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
-                <label>Name</label>
+                <label><b>Name</b></label>
             </div>
 
             <div class="group">
-                <input type="email" required>
+                <input type="email" name="email" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
-                <label>Email</label>
+                <label><b>Email</b></label>
             </div>
 
             <div class="group">
-                <input type="text" minlength="9" maxlength="10" required>
+                <input type="text" minlength="9" maxlength="10" name="mobile" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
-                <label>Mobile No</label>
+                <label><b>Mobile No</b></label>
             </div>
 
             <div class="group">
-                <input type="text" required>
+                <input type="text" name="message" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
-                <label>Message</label>
+                <label><b>Message</b></label>
             </div>
             <div class="group">
-                <center> <button type="submit" class="btn btn-warning">Send <span class="glyphicon glyphicon-send"></span></button></center>
+                <center> <button type="submit" class="btn btn-danger">Send <span class="glyphicon glyphicon-send"></span></button></center>
             </div>
         </form>
     </div>

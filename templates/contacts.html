@@ -3,7 +3,7 @@
 {% block styles %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='css_file_contactss.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css_contact_file_5.css')}}">
 {% endblock %}
 {% block head %}
 {{super()}}
@@ -42,8 +42,8 @@
     </nav>
 
 <div class="my_class">
-
     <div class="col-lg-offset-4 col-lg-4" id="panel">
+        <div id="main">
         <form method="post" action="/home">
 
             <div class="group">
@@ -77,6 +77,7 @@
                 <center> <button type="submit" class="btn btn-danger">Send <span class="glyphicon glyphicon-send"></span></button></center>
             </div>
         </form>
+        </div>
     </div>
 
     </div>

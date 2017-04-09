@@ -1,10 +1,16 @@
 .my_class
 {
-margin:200px;
+margin:20px;
 }
-/*body{
-background-image:url('/static/images/health.jpg')
-}*/
+#main
+{
+background-color:rgba(255,255,255,0.5);
+padding:100px;
+width:500px;
+}
+body{
+background-image:url('/static/images/health.png')
+}
 * {
     box-sizing: border-box;
 }

@@ -1,0 +1,19 @@
+.container{
+    width: 700px;
+    padding: 10px;
+    margin: 100px;
+    margin-left:30%;
+    align:center;
+    }
+  h1{
+  text-align:center;
+  font-weight:bold;
+  }
+  body{
+background-image:url('/static/images/health.png')
+
+  }
+  #main{
+  background-color:rgba(255,255,255,0.5);
+padding:100px;
+  }

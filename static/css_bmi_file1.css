@@ -4,6 +4,11 @@ table {
     height:50%;
 }
 
+body
+{
+background-image:url('/static/images/healthcare.jpg');
+}
+
 table,tr,td{
 border:4px solid black;
 }

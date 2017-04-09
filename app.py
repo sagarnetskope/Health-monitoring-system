@@ -7,7 +7,8 @@ from wtforms import StringField,PasswordField,IntegerField,FloatField
 from flask_login import UserMixin,LoginManager,login_required,login_user,logout_user
 from werkzeug.security import check_password_hash,generate_password_hash
 from flask_mail import Mail,Message
-
+from datadog import statsd
+import time
 
 import os
 
@@ -148,12 +149,14 @@ def load_user(user_id):
 
 @app.route('/home',methods=['GET','POST'])
 def index():
+    start=time.time()
     if request.method=='GET':
         return render_template('index.html')
     if request.method=='POST':
         new_contact= Contact(name=request.form['name'], email=request.form['email'],message=request.form['message'],mobile=str(request.form['mobile']))  # creating an object for sqlalchemy#add more things
         db.session.add(new_contact)  # add new contact to database
         db.session.commit()
+        statsd.histogram('contact_Database_submit_time',time.time()-start)
         name=request.form['name']
         email=request.form['email']
         mobile=request.form['mobile']
@@ -161,6 +164,7 @@ def index():
         bdy='\n\n customer name :'+name+'\n\ncontact no : '+str(mobile)+'\n\n message : '+message
         msg = Message(subject='Your customer  wants to contact with you',body=bdy,sender='health.monitoring2017@gmail.com', recipients=['sags.sharma@gmail.com','sagar@netskope.com'])
         mail.send(msg)
+        statsd.histogram('Mail_send_time',time.time()-start)
         return render_template('index.html')
 
 @app.route('/signup',methods=['GET','POST'])
@@ -182,10 +186,12 @@ def signup():
 
 @app.route('/login',methods=['POST'])
 def login():
+    s=time.time()
     #print '\n\n\ninside login route and authetication will be done after this\n\n\n'
     user=User.query.filter_by(username=request.form['username']).first()
     #print "\n\nusername from form  is "+request.form['username']
     #print "username from database is \n\n"+user.username
+    statsd.histogram('query_time',time.time()-s)
     if user:
             if check_password_hash(user.password,request.form['password']):
                 name=user.name
@@ -242,10 +248,12 @@ def logout():
     return redirect(url_for('index'))
 
 def Bmi_calculator(weight,height):
+    s=time.time()
     height=float(height)
     weight=float(weight)
     x=float(height**2)
     bmi=(weight/x)*703
+    statsd.histogram('bmi_caal_time',time.time()-s)
     return bmi
 
 

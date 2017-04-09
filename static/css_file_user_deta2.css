@@ -1,8 +1,18 @@
-/*body{
-background-image:url('/static/images/healthcare.jpg');
-}*/
+body{
+background-image:url('/static/images/health.png');
+}
+#main{
+background-color: rgba(255, 255, 255, 0.5);
+margin-left: 20px;
+    padding: 20px;
+    width: 600px;
+}
+background-image{
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
 h1,h2{
-font-family: 'Spirax', cursive;
+font-family: 'Sigmar One', cursive;
 }
 h2{
     text-align: center;

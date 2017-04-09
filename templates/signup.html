@@ -4,7 +4,7 @@
 {% block head %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='css_signup_file.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css_signup_f.css')}}">
 {% endblock %}
 {% block content %}
 
@@ -38,8 +38,9 @@
     </nav>
 
 <div class="container">
-    <h1>Signup Form</h1>
+    <div id="main">
 <form method="post" action="/signup">
+    <h1>Signup Form</h1>
   <div class="form-group">
       {{form.hidden_tag()}}
       {{wtf.form_field(form.name)}}
@@ -57,5 +58,6 @@
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
+    </div>
 </div>
 {% endblock %}

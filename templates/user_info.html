@@ -3,8 +3,8 @@
 {% block head %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='css_file_userinfo.css')}}">
-<link href="https://fonts.googleapis.com/css?family=Spirax" rel="stylesheet">
+<link rel="stylesheet" href="{{url_for('static',filename='css_file_user_deta2.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
@@ -22,27 +22,30 @@
           <a class="navbar-brand" href="/logout">Logout</a>
 
         </div>
-        </div><!--/.navbar-collapse -->
-      </div>
+      </div><!--/.navbar-collapse -->
     </nav>
 <br><br><br>
-
 <h1 style="text-align:center">Welcome {{myvar}}</h1>
-<h2>{{myvar}} You are step closer to complete your health analysis</h2>
-`<body>
+<h2>{{myvar}} You are one  step closer to complete your health analysis</h2>
+<div>
 <div class="container">
+    <div id="main">
     <h1>Enter your information</h1>
 <form  method="post" action="/user_info">
   <div class="form-group">
       <label for="age"><b>Age:</b></label>
-      <br><br><input type="number" min="0" max="150" name="age" id="age" placeholder="Enter valid age in years" required><br><br>
+      <br><br><input type="number" min="0" max="150" name="age" id="age" placeholder="Enter valid age in years" class="form-control" required><br><br>
+  </div>
       <label for="gender"><b>Gender:</b></label>
-      <br><br><b>Male:</b><input type="radio" id="gender" value="male" name="gender"> <b>Female:</b> <input type="radio" id="gender" value="female" name="gender"><br><br>
-      <label for="height"><b>Height:</b></label>
-      <br><br><input type="number" min="0" max="300" name="height" id="height" placeholder="Enter valid height in inches" required><br><br>
-      <label for="weight"><b>Weight:</b></label>
-      <br><br><input type="number" min="0" max="900" name="weight" id="weight" placeholder="Enter valid weight in pounds" required><br><br>
-
+        <br><br><b>Male:</b><input type="radio" id="gender" value="male" name="gender" > <b>Female:</b> <input type="radio" id="gender" value="female" name="gender" ><br><br>
+    <div class="form-group">
+        <label for="height"><b>Height:</b></label>
+      <br><br><input type="number" min="0" max="300" name="height" id="height" placeholder="Enter valid height in inches" class="form-control" required><br><br>
+    </div>
+    <div class="form-group">
+        <label for="weight"><b>Weight:</b></label>
+      <br><br><input type="number" min="0" max="900" name="weight" id="weight" class="form-control" placeholder="Enter valid weight in pounds" required><br><br>
+    </div>
     <!--<label for="exampleInputEmail1">Email address</label>
     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
   </div>
@@ -50,11 +53,12 @@
     <label for="exampleInputPassword1">Password</label>
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>!-->
-
-  </div>
   <button type="submit" class="btn btn-default">Calculate BMI</button>
 </form>
+    </div>
 </div>
-
+</div>
+</div>
+</div>
 </body>
 {% endblock %}

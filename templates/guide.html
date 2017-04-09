@@ -3,6 +3,7 @@
 {% block styles %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css_file_user_deta.css')}}">
 {% endblock %}
 {% block head %}
 {{super()}}
@@ -39,5 +40,6 @@
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
+
 
 {% endblock %}

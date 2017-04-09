@@ -1,0 +1,11 @@
+.jumbotron
+{
+background-image:url('/static/images/healthcare.jpg');
+}
+body
+{
+background-image:url('/static/images/healthcare.jpg');
+}
+#main{
+background-color:rgba(255,255,255,0.5);
+}

@@ -2,7 +2,12 @@
 {% block head %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='icon.ico')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='ENTRY_POINT_.css')}}"
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="{{url_for('static',filename='ENTRY_POINT29.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Eagle+Lake" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 {% block title %}Health Monitoring System{% endblock %}
 {% endblock %}
 {% block body %}
@@ -40,47 +45,70 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
-      <div class="container">
-        <h1>Welcome to Health Monitoring System</h1>
-        <p>This is your health monitoring system</p>
-        <p><a class="btn btn-primary btn-lg" href="/guide" role="button"><img src="/static/images/link_7.jpg" class="img-rounded" width="200" height="100"></a></p>
-      </div>
+      <h1 >Welcome to Health Monitoring System</h1>
+        <div class="w3-content w3-section">
+  <img class="mySlides" src="/static/images/img1.jpg" style="width:1000px ;height:300px;">
+  <img class="mySlides" src="/static/images/img2.jpg" style="width:1000px ;height:300px;">
+  <img class="mySlides" src="/static/images/img3.jpg" style="width:1000px; height:300px;">
+          <img class="mySlides" src="/static/images/img4.jpg" style="width:1000px ;height:300px;">
+  <img class="mySlides" src="/static/images/img5.jpg" style="width:1000px ;height:300px;">
+  <img class="mySlides" src="/static/images/img6.jpg" style="width:1000px; height:300px;">
+</div>
+
     </div>
+
+
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>
 <div id="main">
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
-            <h2>Health and Fitness </h2>
           <p></p>
-          <p><a class="btn btn-default" href="http://www.health.com/fitness" role="button"><img src="/static/images/link1.jpg" class="img-rounded" width="304" height="236"></a></p>
+          <p><a class="btn btn-default" href="/guide" role="button"><img src="/static/images/link_7.jpg" class="img-rounded" width="304" height="236"></a></p>
+         <h2>Guidelines </h2>
         </div>
         <div class="col-md-4">
-          <h2>Check Your BMI</h2>
           <p></p>
-          <p><a class="btn btn-default" href="" role="button"><img src="/static/images/link2.png" class="img-rounded" width="304" height="236"></a></p>
-       </div>
+          <p><a class="btn btn-default" href="http://www.health.com/fitness" role="button"><img src="/static/images/link1.jpg" class="img-rounded" width="304" height="236"></a></p>
+        <h2>Health and Fitness </h2>
+        </div>
         <div class="col-md-4">
-          <h2>About Diet</h2>
           <p></p>
-          <p><a class="btn btn-default" href="http://www.healthline.com/health/balanced-diet#overview1" role="button"><img src="/static/images/link3.jpg" class="img-rounded" width="304" height="236"></a></p>
+          <p><a class="btn btn-default" href="/bmi" role="button"><img src="/static/images/link2.png" class="img-rounded" width="304" height="236"></a></p>
+        <h2>Check Your BMI</h2>
         </div>
       </div>
       <div class="row">
         <div class="col-md-4">
-          <h2>Find Nearby Hospitals</h2>
           <p> </p>
-          <p><a class="btn btn-default" href="#" role="button"><img src="/static/images/link4.jpg" class="img-rounded" width="304" height="236"></a></p>
+          <p><a class="btn btn-default" href="/maps" role="button"><img src="/static/images/link4.jpg" class="img-rounded" width="304" height="236"></a></p>
+          <h2>Find Nearby Hospitals</h2>
         </div>
         <div class="col-md-4">
-          <h2>About Heart Attack</h2>
           <p></p>
           <p><a class="btn btn-default" href="http://www.mayoclinic.org/diseases-conditions/heart-attack/basics/symptoms/con-20019520" role="button"><img src="/static/images/link5.jpg" class="img-rounded" width="304" height="236"></a></p>
-       </div>
+       <h2>About Heart Attack</h2>
+        </div>
         <div class="col-md-4">
-          <h2>About Sleep</h2>
           <p></p>
           <p><a class="btn btn-default" href="https://www.nhlbi.nih.gov/health/health-topics/topics/sdd/why" role="button"><img src="/static/images/link6.jpg" class="img-rounded" width="304" height="236"></a></p>
+         <h2 >About Sleep</h2>
         </div>
       </div>
        <div class="row">

@@ -1,0 +1,51 @@
+{% extends "bootstrap/base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{url_for('static',filename='icon.ico')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='maps_1.css')}}">
+<script src="{{url_for('static',filename='maps__2.js')}}"></script>
+{% block title %}Health Monitoring System{% endblock %}
+{% endblock %}
+{% block body %}
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <a class="navbar-brand" href="/home">Home</a>
+             <a class="navbar-brand" href="/about">About us</a>
+             <a class="navbar-brand" href="/signup">Signup</a>
+             <a class="navbar-brand" href="/contacts">Contact</a>
+
+        </div>
+
+
+          <form class="navbar-form navbar-right" action="/login" method="post">
+            <div class="form-group">
+              <input name='username' type="email" placeholder="Email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <input name="password" type="password" placeholder="Password" class="form-control" minlength="8" maxlength="80" required>
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+<br><br>
+  <body>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqlccZk3NnqoJWI6rTGhQf9QujFltYQ1c&libraries=places&callback=initMap" async defer></script>
+  </body>
+</html>
+  </body>
+
+
+{% endblock %}

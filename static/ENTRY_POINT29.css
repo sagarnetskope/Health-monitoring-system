@@ -1,0 +1,19 @@
+body
+{
+background-image:url('/static/images/img6.jpg');
+background-repeat: no-repeat;
+}
+##main{
+background-color:rgba(255,255,255);
+}
+h1
+{
+font-family: 'Eagle Lake', cursive;
+text-align:center;
+}
+h2{
+font-family: 'Russo One', sans-serif;
+}
+.mySlides {display:none;}
+
+.jumbotron{background-color:rgba(66, 144, 40, 0.44);}

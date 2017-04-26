@@ -7,6 +7,7 @@ from wtforms import StringField,PasswordField,IntegerField,FloatField
 from flask_login import UserMixin,LoginManager,login_required,login_user,logout_user
 from werkzeug.security import check_password_hash,generate_password_hash
 from flask_mail import Mail,Message
+from sqlalchemy.exc import IntegrityError
 #from datadog import statsd
 #import time
 
@@ -171,16 +172,20 @@ def index():
 def signup():
     form=SignupForm()
     if form.validate_on_submit():
+        try:
         #return 'form submitted and validated'
-        hashed_password=generate_password_hash(form.password.data)
+            hashed_password=generate_password_hash(form.password.data)
         #add error message for unique username
-        new_user=User(name=form.name.data,username=form.username.data,password=hashed_password)#creating an object for sqlalchemy#add more things
-        db.session.add(new_user)#add new user to database
-        db.session.commit()
-        msg=Message(subject='You have successfully signed up to Health Monitoring System',body='Complete your registartion by going to This url\nhttp://localhost:9000/home',sender='health.monitoring2017@gmail.com',recipients=[form.username.data])
-        mail.send(msg)
+            new_user=User(name=form.name.data,username=form.username.data,password=hashed_password)#creating an object for sqlalchemy#add more things
+            db.session.add(new_user)#add new user to database
+            db.session.commit()
+            msg=Message(subject='You have successfully signed up to Health Monitoring System',body='Complete your registartion by going to This url\nhttp://localhost:9000/home',sender='health.monitoring2017@gmail.com',recipients=[form.username.data])
+            mail.send(msg)
        # flash("Successfully signed in",'success')
-        return redirect(url_for('index'))#redirect to index.html
+            return redirect(url_for('index'))#redirect to index.html
+        except exc.IntegrityError :
+            db.session().rollback()
+
     return render_template('signup.html',form=form)
 
 
@@ -246,6 +251,11 @@ def Guide():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/maps')
+def maps():
+    return render_template('maps.html')
 
 def Bmi_calculator(weight,height):
    # s=time.time()

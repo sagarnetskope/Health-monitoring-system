@@ -4,7 +4,8 @@
 {% block head %}
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='a.ico')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='css_signup_f1.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='signup_css_2.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
@@ -37,9 +38,16 @@
 
     </nav>
 
+
+
 <div class="container">
     <div id="main">
 <form method="post" action="/signup">
+            <div id="error">
+  {% if (my_error!=''): %}<br>
+  <h2>{{my_error}}</h2>
+  {% endif %}
+ </div>
     <h1>Signup Form</h1>
   <div class="form-group">
       {{form.hidden_tag()}}
@@ -58,6 +66,8 @@
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
+
+
     </div>
 </div>
 {% endblock %}

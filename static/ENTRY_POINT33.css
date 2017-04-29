@@ -17,3 +17,8 @@ font-family: 'Russo One', sans-serif;
 .mySlides {display:none;}
 
 .jumbotron{background-color:rgba(66, 144, 40, 0.44);}
+
+#error{
+background-color:rgba(255, 0, 0, 0.54);
+text-align:right;
+}

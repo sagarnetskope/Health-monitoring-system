@@ -152,7 +152,7 @@ def load_user(user_id):
 def index():
     #start=time.time()
     if request.method=='GET':
-        return render_template('index.html')
+        return render_template('index.html',my_error='')
     if request.method=='POST':
         new_contact= Contact(name=request.form['name'], email=request.form['email'],message=request.form['message'],mobile=str(request.form['mobile']))  # creating an object for sqlalchemy#add more things
         db.session.add(new_contact)  # add new contact to database
@@ -166,13 +166,13 @@ def index():
         msg = Message(subject='Your customer  wants to contact with you',body=bdy,sender='health.monitoring2017@gmail.com', recipients=['sags.sharma@gmail.com','sagar@netskope.com'])
         mail.send(msg)
      #   statsd.histogram('Mail_send_time',time.time()-start)
-        return render_template('index.html')
+        return render_template('index.html',my_error='')
 
 @app.route('/signup',methods=['GET','POST'])
 def signup():
     form=SignupForm()
-    if form.validate_on_submit():
-        try:
+    try:
+        if form.validate_on_submit():
         #return 'form submitted and validated'
             hashed_password=generate_password_hash(form.password.data)
         #add error message for unique username
@@ -183,9 +183,15 @@ def signup():
             mail.send(msg)
        # flash("Successfully signed in",'success')
             return redirect(url_for('index'))#redirect to index.html
-        except exc.IntegrityError :
-            db.session().rollback()
-
+    except IntegrityError as err:
+            db.session.rollback()
+            if "UNIQUE constraint failed: user.username" in str(err):
+                my_error=" Username already exists %s" % form.username.data
+                return render_template('signup.html',form=form,my_error=my_error)
+            elif "FOREIGN KEY constraint failed" in str(err):
+                return "supplier does not exist"
+            else:
+                return "unknown error adding user"
     return render_template('signup.html',form=form)
 
 
@@ -205,9 +211,11 @@ def login():
                 login_user(user)
                 return redirect(url_for('user_info',user=name))
             else:
-                return "login not successfull Password is incorrect"
+                error='Please Enter Correct Password'
+                return render_template('index.html',my_error=error)
     else:
-        "Login not successful ie username is incorrect"
+        error='Please Enter Correct Username OR SignUp First'
+        return render_template('index.html',my_error=error)
 
 
 name=''

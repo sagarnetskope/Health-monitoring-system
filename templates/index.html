@@ -3,16 +3,20 @@
 {{super()}}
 <link rel="shortcut icon" href="{{url_for('static',filename='icon.ico')}}">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="{{url_for('static',filename='ENTRY_POINT29.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='ENTRY_POINT33.css')}}">
 <link href="https://fonts.googleapis.com/css?family=Eagle+Lake" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 {% block title %}Health Monitoring System{% endblock %}
 {% endblock %}
 {% block body %}
 
   <body>
+ <div id="error">
+  {% if (my_error!=''): %}<br>
+  <h2>{{my_error}}</h2>
+  {% endif %}
+ </div>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -73,6 +77,13 @@ function carousel() {
     x[myIndex-1].style.display = "block";
     setTimeout(carousel, 2000); // Change image every 2 seconds
 }
+
+
+function login_error(my_error)
+{
+window.alert(my_error);
+}
+
 </script>
 <div id="main">
     <div class="container">

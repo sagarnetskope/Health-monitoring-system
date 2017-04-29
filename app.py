@@ -244,6 +244,10 @@ def user_info():
 def about():
     return render_template('about.html')
 
+@app.route('/bmi')
+def bmi():
+    return render_template('bmi_entry.html')
+
 @app.route('/contacts')
 def contact():
     return render_template('contacts.html')

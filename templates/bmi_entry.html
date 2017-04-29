@@ -1,0 +1,158 @@
+{% extends "bootstrap/base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{url_for('static',filename='icon.ico')}}">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link href="/static/stylesheet.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+<meta charset="utf-8">
+<script>
+$(function(){
+
+      $('#fm2').validate({
+        rules: {
+          feet:{
+            required:true,
+          },
+          pounds:{
+            required:true,
+          },
+        },
+          messages: {
+          feet: {
+            required: "This field is required."
+          },
+          pounds:{
+            required: "This field is required."
+          }
+        }
+      });
+        $('#fm1').validate({
+        rules: {
+          center:{
+            required:true,
+          },
+          kilograms:{
+            required:true,
+          }
+        },
+        messages: {
+          center: {
+            required: "This field is required."
+          },
+          kilograms:{
+            required: "This field is required."
+          }
+        }
+      });
+});
+</script>
+{% block title %}Health Monitoring System{% endblock %}
+{% endblock %}
+{% block body %}
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <a class="navbar-brand" href="/home">Home</a>
+             <a class="navbar-brand" href="/about">About us</a>
+             <a class="navbar-brand" href="/signup">Signup</a>
+             <a class="navbar-brand" href="/contacts">Contact</a>
+
+        </div>
+
+
+          <form class="navbar-form navbar-right" action="/login" method="post">
+            <div class="form-group">
+              <input name='username' type="email" placeholder="Email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <input name="password" type="password" placeholder="Password" class="form-control" minlength="8" maxlength="80" required>
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+<br><br>
+  <div class="page-header">
+  <h1 style="margin-left:5%;font-family: 'Lobster', cursive; color:crimson; font-size: 100px">Body Mass Index<br></h1>
+</div>
+<div class="btn-group" id="border">
+  <button type="button" id="button1" class="btn btn-primary btn-lg">Standard</button>
+  <button type="button" id="button2" class="btn btn-primary btn-lg">Metric</button></br></br></br>
+<form class="form-inline" id="fm2">
+  <div class="form-group">
+    <label for="exampleInputName2">Your Height</label>
+    <input type="text" class="form-control" name="feet" id="feet" placeholder="feet">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" name="inch" id="inch" placeholder="inch">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail2">Your Weight</label>
+    <input type="text" class="form-control" name="pounds" id="pounds" placeholder="pounds">
+  </div>
+</form>
+<form class="form-inline" id="fm1" hidden>
+  <div class="form-group">
+    <label for="exampleInputName2">Your Height</label>
+    <input type="text" class="form-control" name="center" id="center" placeholder="centimeters" >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail2">Your Weight</label>
+    <input type="text" class="form-control" name="kilograms" id="kilograms" placeholder="kilograms" >
+  </div>
+</form>
+
+<div class="btn-group" >
+<button type="submit" id="compute" class="btn btn-success" >Compute Your BMI</button>
+<button type="submit" id="clear" class="btn btn-success" >Clear All</button>
+</div>
+</br>
+</br>
+</br>
+</br>
+<form class="form-inline" id="urbmi">
+  <div class="form-group">
+    <label for="exampleInputName2">Your BMI&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+    <input type="text" class="form-control" id="BMI" >
+  </div>
+</form>
+</div>
+<div>
+    <div id="title"><b>Percentage of Indian obese by age, hover on  histogram or pie chart for detail information about age group and their BMI </b></div><br><br><br><br>
+ <div id="container" ></div>
+
+    <div id='dashboard'></div>
+</div>
+
+<script src="/static/compute.js"></script>
+<script src="/static/gauge.js"></script>
+<script src="/static/hstpie.js"></script>
+<script src="/static/data.js"></script>
+
+
+  </body>
+
+
+
+{% endblock %}

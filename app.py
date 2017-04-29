@@ -179,7 +179,7 @@ def signup():
             new_user=User(name=form.name.data,username=form.username.data,password=hashed_password)#creating an object for sqlalchemy#add more things
             db.session.add(new_user)#add new user to database
             db.session.commit()
-            msg=Message(subject='You have successfully signed up to Health Monitoring System',body='Complete your registartion by going to This url\nhttp://localhost:9000/home',sender='health.monitoring2017@gmail.com',recipients=[form.username.data])
+            msg=Message(subject='You have successfully signed up to Health Monitoring System',body='Complete your registration by going to This url\nhttp://localhost:9000/home',sender='health.monitoring2017@gmail.com',recipients=[form.username.data])
             mail.send(msg)
        # flash("Successfully signed in",'success')
             return redirect(url_for('index'))#redirect to index.html

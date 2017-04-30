@@ -8,4 +8,4 @@ Flask-WTF==0.13.1
 packaging==16.8
 pyparsing==2.2.0
 six==1.10.0
-gunicorn==8.1.1
+gunicorn==19.7.1

@@ -5,6 +5,7 @@ Flask-Script==2.0.5
 Flask-SQLAlchemy==2.1
 Flask-User==0.6.11
 Flask-WTF==0.13.1
+flask-bootstrap==3.3.7
 packaging==16.8
 pyparsing==2.2.0
 six==1.10.0
